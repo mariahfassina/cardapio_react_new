@@ -1,49 +1,63 @@
+// --- START OF FILE src/App.js ---
+
 import './App.css';
 import React from 'react';
-import dados from './dados.json'; // Importa os dados do arquivo JSON
-import MenuItem from './components/MenuItem'; // Componente para exibir os itens do cardápio
+import dados from './dados.json'; // Importa os dados do JSON
+import MenuItem from './components/MenuItem'; // Importa o componente MenuItem
+
+// REMOVIDA a função getBaseImageName - não é mais necessária
 
 function App() {
+  let itemIndex = 0; // Contador para o índice global
+
   return (
     <div className="app-container">
-      <h1>Cardápio</h1>
-      
-      {/* Renderizando as categorias do cardápio */}
-      <h2>Massas</h2>
-      <section className="cardapio-lista">
+      <h1>Cardápio </h1>
+
+      {/* Seção Massas */}
+      <h2 id="categoria-massas-titulo">Massas</h2>
+      <section className="cardapio-lista" aria-labelledby="categoria-massas-titulo">
         {dados.massas.map((item) => (
           <MenuItem
-            key={item.nome}
+            key={item.nome} // Usar um ID único seria melhor, mas nome funciona por enquanto
             nome={item.nome}
             descricao={item.descricao}
             preco={item.preco}
-            imagemUrl={`/images/${item.imagem}`} // Caminho para a imagem
+            // Usa o caminho DIRETAMENTE do dados.json
+            imagemUrl={item.imagem}
+            index={itemIndex++} // Passa o índice para MenuItem
           />
         ))}
       </section>
-      
-      <h2>Sobremesas</h2>
-      <section className="cardapio-lista">
+
+      {/* Seção Sobremesas */}
+      <h2 id="categoria-sobremesas-titulo">Sobremesas</h2>
+      <section className="cardapio-lista" aria-labelledby="categoria-sobremesas-titulo">
         {dados.sobremesas.map((item) => (
           <MenuItem
             key={item.nome}
             nome={item.nome}
             descricao={item.descricao}
             preco={item.preco}
-            imagemUrl={`/images/${item.imagem}`} // Caminho para a imagem
+            // Usa o caminho DIRETAMENTE do dados.json
+            imagemUrl={item.imagem}
+            index={itemIndex++} // Passa o índice
           />
         ))}
       </section>
-      
-      <h2>Pratos Típicos</h2>
-      <section className="cardapio-lista">
+
+      {/* Seção Pratos Típicos */}
+      <h2 id="categoria-tipicos-titulo">Pratos Típicos</h2>
+      <section className="cardapio-lista" aria-labelledby="categoria-tipicos-titulo">
         {dados.tipicos.map((item) => (
           <MenuItem
             key={item.nome}
             nome={item.nome}
             descricao={item.descricao}
             preco={item.preco}
-            imagemUrl={`/images/${item.imagem}`} // Caminho para a imagem
+            // Usa o caminho DIRETAMENTE do dados.json
+            imagemUrl={item.imagem}
+            index={itemIndex++} // Passa o índice
           />
         ))}
       </section>
@@ -52,3 +66,4 @@ function App() {
 }
 
 export default App;
+// --- END OF FILE src/App.js ---
