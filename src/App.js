@@ -1,11 +1,10 @@
-// --- START OF FILE src/App.js ---
-
 import './App.css';
-import React from 'react';
+import React, { Suspense, lazy } from 'react'; // Adicionado Suspense e lazy
 import dados from './dados.json'; // Importa os dados do JSON
 import MenuItem from './components/MenuItem'; // Importa o componente MenuItem
 
-// REMOVIDA a função getBaseImageName - não é mais necessária
+// Importa o componente ExtraInfo dinamicamente
+const ExtraInfo = lazy(() => import('./components/ExtraInfo'));
 
 function App() {
   let itemIndex = 0; // Contador para o índice global
@@ -19,7 +18,7 @@ function App() {
       <section className="cardapio-lista" aria-labelledby="categoria-massas-titulo">
         {dados.massas.map((item) => (
           <MenuItem
-            key={item.nome} // Usar um ID único seria melhor, mas nome funciona por enquanto
+            key={item.nome}
             nome={item.nome}
             descricao={item.descricao}
             preco={item.preco}
@@ -61,9 +60,13 @@ function App() {
           />
         ))}
       </section>
+
+      {/* Seção de Informações Adicionais com Code Splitting */}
+      <Suspense fallback={<div>Carregando informações extras...</div>}>
+        <ExtraInfo />
+      </Suspense>
     </div>
   );
 }
 
 export default App;
-// --- END OF FILE src/App.js ---
